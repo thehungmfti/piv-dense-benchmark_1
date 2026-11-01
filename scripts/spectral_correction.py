@@ -364,6 +364,17 @@ def analyze(out: Path, a):
         plt.close(fig)
 
     pd.DataFrame(trows).to_csv(out / "transfer.csv", index=False)
+    # Phổ dạng bảng dài cho MATLAB (p1_resolution_gui)
+    long = []
+    for key, val in Z.items():
+        if key == "k" or not key.endswith("|E_true"):
+            continue
+        kind, role, cfg, ppp, snr, _ = key.split("|")
+        base = key[: -len("E_true")]
+        long.append(pd.DataFrame(dict(kind=kind, role=role, cfg=cfg, ppp=float(ppp), snr=float(snr), k=k,
+                                      E_true=val, E_meas=Z[base + "E_meas"], S_et=Z[base + "S_et"])))
+    if long:
+        pd.concat(long).to_csv(out / "spectra_long.csv", index=False)
     kd = pd.DataFrame(krows)
     kd.to_csv(out / "k10.csv", index=False)
     print(kd.to_string(index=False, float_format=lambda x: f"{x:.4g}"))
