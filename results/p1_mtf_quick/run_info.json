@@ -1,0 +1,114 @@
+{
+ "quick": true,
+ "grid": {
+  "wavelengths": [
+   "4",
+   "6",
+   "8",
+   "12",
+   "16",
+   "24",
+   "32",
+   "48",
+   "64",
+   "128"
+  ],
+  "amplitudes": [
+   "0.5",
+   "2.0"
+  ],
+  "ppp": [
+   "0.01",
+   "0.02",
+   "0.05",
+   "0.1"
+  ],
+  "snr": [
+   "inf",
+   "10.0",
+   "5.0"
+  ],
+  "lambda_scales": [
+   "0.1",
+   "1.0",
+   "10.0"
+  ],
+  "seeds": [
+   "0"
+  ],
+  "methods": [
+   "ofpiv",
+   "cc32",
+   "cc16",
+   "raftpiv"
+  ]
+ },
+ "shape": [
+  256,
+  256
+ ],
+ "border": 16,
+ "component": "u",
+ "lambda_mode": "paired",
+ "method_configs": [
+  {
+   "label": "ofpiv_s0.1",
+   "method": "ofpiv",
+   "lambda_scale": 0.1,
+   "lambda_HS": 2.0,
+   "lambda_LS": 200.0,
+   "window": NaN,
+   "params": "{'lambda_HS': 2.0, 'lambda_LS': 200.0, 'init': 'crosscorr', 'n_levels': 1, 'n_iter': 1}"
+  },
+  {
+   "label": "ofpiv_s1",
+   "method": "ofpiv",
+   "lambda_scale": 1.0,
+   "lambda_HS": 20.0,
+   "lambda_LS": 2000.0,
+   "window": NaN,
+   "params": "{'lambda_HS': 20.0, 'lambda_LS': 2000.0, 'init': 'crosscorr', 'n_levels': 1, 'n_iter': 1}"
+  },
+  {
+   "label": "ofpiv_s10",
+   "method": "ofpiv",
+   "lambda_scale": 10.0,
+   "lambda_HS": 200.0,
+   "lambda_LS": 20000.0,
+   "window": NaN,
+   "params": "{'lambda_HS': 200.0, 'lambda_LS': 20000.0, 'init': 'crosscorr', 'n_levels': 1, 'n_iter': 1}"
+  },
+  {
+   "label": "cc32",
+   "method": "crosscorr",
+   "lambda_scale": NaN,
+   "lambda_HS": NaN,
+   "lambda_LS": NaN,
+   "window": 32,
+   "params": "{'windows': (64, 32), 'overlap': 0.75, 'iters_per_window': (1, 2)}"
+  },
+  {
+   "label": "cc16",
+   "method": "crosscorr",
+   "lambda_scale": NaN,
+   "lambda_HS": NaN,
+   "lambda_LS": NaN,
+   "window": 16,
+   "params": "{'windows': (64, 32, 16), 'overlap': 0.75, 'iters_per_window': (1, 1, 2)}"
+  },
+  {
+   "label": "raftpiv",
+   "method": "raftpiv",
+   "lambda_scale": NaN,
+   "lambda_HS": NaN,
+   "lambda_LS": NaN,
+   "window": NaN,
+   "params": "{'backend': 'local', 'iters': 16, 'device': 'cpu', 'tile': None}"
+  }
+ ],
+ "unavailable": {},
+ "lambda_HS0": 20.0,
+ "lambda_LS0": 2000.0,
+ "d_p": 2.5,
+ "n_jobs": 240
+}
