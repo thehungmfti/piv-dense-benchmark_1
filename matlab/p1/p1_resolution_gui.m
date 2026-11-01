@@ -357,10 +357,11 @@ if isempty(P), logmsg(fig, 'Không có phổ cho lựa chọn này.'); return; e
 k = P.k; Et = P.E_true; Em = P.E_meas;
 [Hk, N] = pickHN(S, H, cfg, ppp, snr, k, Em);
 Ec = p1_correct_spectrum(k, Em, Hk, N, H.mode.Value, eps_, hmin);
-if strcmp(H.field.Value, 'turb'), kmax = 0.25; else, kmax = 1 / 3; end
-kmax = min(kmax, max(k(Et > 1e-12 * max(Et))));
-k0 = p1_valid_k(k, Em, Et, tol, kmax);
-k1 = p1_valid_k(k, Ec, Et, tol, kmax);
+% dải đánh giá: bỏ bin đầu (rò rỉ cửa sổ Hann), tới k cuối mà trường gốc còn năng lượng (> 1e-3·max)
+kmax = min(1 / 3, max(k(Et > 1e-3 * max(Et))));
+kmin = 1.5 * (k(2) - k(1));
+k0 = p1_valid_k(k, Em, Et, tol, kmax, kmin);
+k1 = p1_valid_k(k, Ec, Et, tol, kmax, kmin);
 ax = H.ax(5); cla(ax);
 loglog(ax, k, Et, 'k-', 'LineWidth', 2, 'DisplayName', 'E_{true}'); hold(ax, 'on');
 loglog(ax, k, Em, '-', 'Color', [0.85 0.2 0.1], 'LineWidth', 1.5, 'DisplayName', 'E_{meas}');

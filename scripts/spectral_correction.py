@@ -85,11 +85,11 @@ def job_sine(j):
     return out
 
 
-def make_truth(kind, seed, shape, rms, dns_path=None):
+def make_truth(kind, seed, shape, rms, dns_path=None, turb_kmax=None):
     from pivbench.synth import GriddedField, TurbulenceField
 
     if kind == "turb":
-        return TurbulenceField(shape, rms=rms, seed=seed)
+        return TurbulenceField(shape, rms=rms, seed=seed, k_max=turb_kmax)
     if kind == "dns":
         if dns_path:
             from pivbench.synth import load_dns_field
@@ -113,7 +113,7 @@ def job_field(j):
 
     _set_threads()
     shape = tuple(j["shape"])
-    field = make_truth(j["kind"], j["seed"], shape, j["rms"], j.get("dns_path"))
+    field = make_truth(j["kind"], j["seed"], shape, j["rms"], j.get("dns_path"), j.get("turb_kmax"))
     s = generate_pair(field, shape, ppp=j["ppp"], snr=_snr_arg(j["snr"]), d_p=2.5, seed=10_000 + j["seed"])
     b = j["border"]
     k, Ett = radial_auto_spectrum(s["u"], s["v"], b)
@@ -163,8 +163,11 @@ def main(argv=None):
     ap.add_argument("--lambda-scales", type=float, nargs="+", default=[1.0])
     ap.add_argument("--ppp", type=float, nargs="+", default=[0.05])
     ap.add_argument("--snr", type=float, nargs="+", default=[math.inf, 10.0])
-    ap.add_argument("--rms", type=float, default=2.0, help="rms của |u| trường rối/DNS (px)")
-    ap.add_argument("--A-sine", type=float, default=2.0, help="biên độ sin để đo H (≈ √2·rms thành phần)")
+    ap.add_argument("--rms", type=float, default=1.0, help="rms của |u| trường rối/DNS (px)")
+    ap.add_argument("--turb-kmax", type=float, default=32.0,
+                    help="số sóng cắt của rối k^-5/3 (chu kỳ/miền; 32 trên 256 px ⇒ λ_min = 8 px)")
+    ap.add_argument("--A-sine", type=float, default=None,
+                    help="biên độ sin để đo H (mặc định = rms: cùng rms với 1 thành phần ×√2)")
     ap.add_argument("--seeds-sine", type=int, default=None)
     ap.add_argument("--n-train", type=int, default=None)
     ap.add_argument("--n-test", type=int, default=None)
@@ -180,6 +183,7 @@ def main(argv=None):
     a.n_train = a.n_train or (4 if q else 16)
     a.n_test = a.n_test or (4 if q else 16)
     a.n_zero = a.n_zero or (2 if q else 4)
+    a.A_sine = a.A_sine or a.rms
     out = Path(a.out or (ROOT / "results" / ("p1_spectral_quick" if q else "p1_spectral_full")))
     (out / "figures").mkdir(parents=True, exist_ok=True)
     if a.dns_path is None:
@@ -199,7 +203,7 @@ def main(argv=None):
             unavailable["raftpiv"] = msg
             print("[spectral] bỏ raftpiv:", msg)
     cfgs = method_configs(methods, a.lambda_scales)
-    base = dict(shape=a.shape, border=a.border, cfgs=cfgs)
+    base = dict(shape=a.shape, border=a.border, cfgs=cfgs, turb_kmax=a.turb_kmax)
 
     t0 = time.time()
     sine_jobs = [dict(base, A=a.A_sine, lam=lam, comp=comp, ppp=p, snr=s, seed=sd)
@@ -290,8 +294,8 @@ def analyze(out: Path, a):
             Et, Em = get(kind, "test", "E_true"), get(kind, "test", "E_meas")
             if Et is None:
                 continue
-            kmax = 0.25 if kind == "turb" else 1.0 / 3.0
-            band = Et > 1e-12 * np.nanmax(Et)
+            kmax = (getattr(a, "turb_kmax", 32.0) or a.shape[0] / 4) / min(a.shape) if kind == "turb" else 1.0 / 3.0
+            band = Et > 1e-3 * np.nanmax(Et)  # như GUI MATLAB
             kmax = min(kmax, k[band].max())
             N_tail = noise_floor_tail(k, Em)
             variants = {
@@ -303,10 +307,11 @@ def analyze(out: Path, a):
                 "H_xs rối + N_xs (inverse)": correct_spectrum(k, Em, H["xs_turb"], N_xs, mode="inverse",
                                                              h_min=a.h_min),
             }
-            k0 = valid_wavenumber(k, Em, Et, a.tol, k_max=kmax)
+            kmin = 1.5 * (k[1] - k[0])  # bỏ bin đầu (rò rỉ cửa sổ Hann / trừ trung bình)
+            k0 = valid_wavenumber(k, Em, Et, a.tol, k_max=kmax, k_min=kmin)
             for name, E in variants.items():
-                kc = valid_wavenumber(k, E, Et, a.tol, k_max=kmax)
-                sel = (k <= kmax) & np.isfinite(E) & (Et > 0)
+                kc = valid_wavenumber(k, E, Et, a.tol, k_max=kmax, k_min=kmin)
+                sel = (k <= kmax) & (k >= kmin) & np.isfinite(E) & (E > 0) & (Et > 0)
                 krows.append(dict(field=kind, cfg=cfg, ppp=ppp, snr=snr, variant=name, k10=kc,
                                   lambda10=1 / kc if kc > 0 else np.inf, k10_meas=k0,
                                   improvement=kc / k0 if k0 > 0 else np.nan,

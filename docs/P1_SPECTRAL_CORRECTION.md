@@ -19,7 +19,7 @@ div = 0). Khớp bình phương tối thiểu tại đúng λ trên vùng bỏ b
 (đổi ra px: Δφ·λ/2π). λ_c(t): λ nhỏ nhất mà từ đó trở lên MTF ≥ t, nội suy tuyến tính theo log λ.
 
 Lý thuyết top-hat (tương quan chéo 1 lượt, cửa sổ W): **MTF(λ) = |sinc(W/λ)| = |sin(πW/λ)/(πW/λ)|**,
-λ_c(0.9) = 3.85·W, λ_c(0.5) = 1.66·W.
+λ_c(0.9) = 3.99·W, λ_c(0.5) = 1.66·W.
 
 ## 3. Hàm truyền H(k)
 
@@ -56,8 +56,10 @@ chỉ áp tại các k có **|H(k)| > h_min**; nơi khác E_corr = NaN (không b
 ## 6. Tiêu chí đánh giá
 
 `k₁₀` = số sóng lớn nhất k* sao cho |E(k)/E_true(k) − 1| < 10 % với **mọi** bin k ≤ k* (liên tục từ k nhỏ
-nhất; bin NaN coi như không đạt). Giới hạn trên: dải có năng lượng của trường gốc (rối tổng hợp:
-k ≤ 0.25 chu kỳ/px; DNS 2D: k ≤ 1/3). Tỉ lệ cải thiện = k₁₀(E_corr)/k₁₀(E_meas). Báo cáo kèm λ₁₀ = 1/k₁₀.
+nhất; bin NaN coi như không đạt). Bin đầu tiên (k < 1.5Δk) bị bỏ vì bị chi phối bởi rò rỉ cửa sổ Hann và
+phép trừ trung bình. Giới hạn trên: số sóng cắt của trường gốc (rối tổng hợp: k_max/N, mặc định 32/256 =
+0.125 chu kỳ/px ⇒ λ_min = 8 px; DNS 2D: 1/3) và E_true > 10⁻³·max E_true. Tỉ lệ cải thiện =
+k₁₀(E_corr)/k₁₀(E_meas). Báo cáo kèm λ₁₀ = 1/k₁₀.
 
 ## 7. Giới hạn của mô hình
 

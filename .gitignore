@@ -22,3 +22,6 @@ results/wake_benchmark/spectra/
 results/wake_benchmark/figures/*_Re*
 matlab/*.mat
 matlab/pivbench_python.txt
+# P1: commit CSV + hình, không commit npz lớn
+!results/p1_*/
+results/p1_*/spectra.npz
