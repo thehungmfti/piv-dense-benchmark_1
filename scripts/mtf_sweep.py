@@ -127,7 +127,7 @@ def run_case(job):
         import torch
 
         torch.set_num_threads(1)
-    except ImportError:
+    except Exception:  # noqa: BLE001
         pass
     A, lam, ppp, snr, seed = job["A"], job["wavelength"], job["ppp"], job["snr"], job["seed"]
     comp, shape, border = job["component"], tuple(job["shape"]), job["border"]
