@@ -1,0 +1,1 @@
+raftpiv: RaftPIVUnavailable: Không thấy mã nguồn RAFT-PIV tại /home/user/piv-dense-benchmark/third_party/RAFT-PIV. Đặt RAFTPIV_REPO hoặc clone repo chính thức vào third_party/RAFT-PIV (xem README, mục RAFT-PIV).

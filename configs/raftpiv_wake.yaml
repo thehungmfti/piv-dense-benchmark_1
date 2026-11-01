@@ -1,0 +1,46 @@
+# Huấn luyện RAFT-PIV (tái hiện) cho dòng wake sau mô hình trục đối xứng đáy tù.
+# Chạy:  python scripts/train_raftpiv.py configs/raftpiv_wake.yaml
+name: raftpiv_wake
+out_dir: checkpoints/raftpiv_wake
+
+model:                       # tham số mạng — chỉnh cho bài toán
+  down: 4                    # /4: giữ chi tiết hạt 1.5–4 px & lớp cắt mỏng (RAFT gốc /8)
+  enc_channels: [32, 48, 64]
+  feat_dim: 128
+  hidden_dim: 96
+  context_dim: 64
+  corr_levels: 4             # tầm tra cứu: ±r·down·2^(L−1) = ±4·4·8 = ±128 px ≫ U∞ (≤ 12 px)
+  corr_radius: 4
+  motion_dim: 96
+  iters: 8                   # vòng cập nhật khi huấn luyện (suy luận dùng 12–16)
+
+data:
+  pool:                      # kho tổng hợp sinh trước (wake chiếm 75 %)
+    dir: ../raftpiv_data/pool128
+    n: 16000
+    size: 128
+    seed: 2026
+    mix: {wake: 0.75, vortex: 0.07, turbulence: 0.08, sine: 0.05, uniform: 0.05}
+  cai:                       # Cai et al. 2019 (tải thủ công, xem scripts/download_data.md); bỏ trống nếu không có
+    root: ../data_cai
+    classes: [cylinder, backstep]
+    prob: 0.3                # xác suất lấy 1 mẫu Cai trong batch
+  crop: 128
+
+train:
+  steps: 6000
+  batch: 6
+  lr: 4.0e-4
+  weight_decay: 1.0e-5
+  gamma: 0.8
+  clip: 1.0
+  val_every: 500
+  ckpt_every: 250
+  threads: 4
+  time_limit_h: 4.0
+  device: cpu                # "cuda" nếu có GPU
+
+validation:
+  wake_n: 24                 # mẫu wake 256×256 sinh riêng (seed khác kho huấn luyện)
+  wake_seed: 777
+  cai_n_per_class: 24        # từ FlowData_test.list

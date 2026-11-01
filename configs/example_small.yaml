@@ -1,0 +1,43 @@
+# Thí nghiệm nhỏ chạy CPU (~vài phút): ảnh 256×256, ofpiv & crosscorr (+ raftpiv để ghi nhận trạng thái)
+name: example_small
+shape: [256, 256]
+border: 16            # bỏ 16 px mỗi cạnh khi tính sai số / phổ / MTF
+seeds: [0]
+save_images: false
+
+synth:
+  d_p: 2.5
+  ppp: [0.05]
+  snr: [null, 10]     # null = không nhiễu; 10 = I_peak/σ_noise
+  intensity_min: 0.6
+  sheet_thickness: null
+
+methods:
+  - name: ofpiv                 # đúng quy trình OpenOpticalFlow_PIV_Run.m (CC init, 1 lượt)
+    method: ofpiv
+    params: {lambda_HS: 20, lambda_LS: 2000, init: crosscorr, n_levels: 1, n_iter: 1}
+  - name: ofpiv_warp            # mở rộng: dịch ảnh bằng nội suy bậc 3, lặp 3 lượt
+    method: ofpiv
+    params: {lambda_HS: 20, lambda_LS: 2000, init: crosscorr, shift_method: warp, n_iter: 3}
+  - name: crosscorr
+    method: crosscorr
+    params: {windows: [64, 32, 16], overlap: 0.75, iters_per_window: [1, 1, 2]}
+  - name: raftpiv
+    method: raftpiv
+    params: {}
+
+fields:
+  - name: lamb_oseen
+    kind: lamb_oseen
+    params: {core_radius: 16, u_max: 4.0}
+  - name: turbulence
+    kind: turbulence
+    params: {rms: 2.0, k_max: 32, seed: 1}     # λ_min = 8 px
+  - name: sine
+    kind: sine
+    params: {amplitude: 0.5}                   # u = A sin(2πx/λ)
+    wavelengths: [4, 6, 8, 12, 16, 24, 32, 48, 64, 128, 256]
+
+metrics:
+  mtf_thresholds: [0.9, 0.5]
+  gradient_mask: {quantity: vorticity, top_percent: 10}

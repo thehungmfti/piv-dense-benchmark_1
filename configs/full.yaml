@@ -1,0 +1,43 @@
+# Thí nghiệm đầy đủ (nên chạy GPU cho raftpiv): quét ppp × SNR × λ_LS
+name: full
+shape: [512, 512]
+border: 24
+seeds: [0, 1, 2]
+
+synth:
+  d_p: 2.5
+  ppp: [0.005, 0.01, 0.02, 0.05, 0.1]
+  snr: [null, 20, 10, 5]
+  sheet_thickness: 10.0
+  out_of_plane_std: 0.5
+
+methods:
+  - name: ofpiv
+    method: ofpiv
+    params: {lambda_HS: 20, init: crosscorr}
+    sweep: {lambda_LS: [200, 2000, 20000]}
+  - name: ofpiv_warp
+    method: ofpiv
+    params: {lambda_HS: 20, lambda_LS: 2000, init: crosscorr, shift_method: warp, n_iter: 3}
+  - name: ofpiv_pyr
+    method: ofpiv
+    params: {lambda_HS: 20, lambda_LS: 2000, init: none, shift_method: warp, n_levels: 3, n_iter: 2}
+  - name: crosscorr
+    method: crosscorr
+    params: {windows: [64, 32, 16], overlap: 0.75}
+  - name: raftpiv
+    method: raftpiv
+    params: {iters: 12}
+
+fields:
+  - {name: lamb_oseen, kind: lamb_oseen, params: {core_radius: 20, u_max: 5.0}}
+  - {name: turbulence, kind: turbulence, params: {rms: 3.0, k_max: 64, seed: 1}}
+  - name: sine
+    kind: sine
+    params: {amplitude: 0.5}
+    wavelengths: [4, 6, 8, 12, 16, 24, 32, 48, 64, 128, 256]
+  # - {name: jhtdb, kind: dns, params: {path: data/raw/jhtdb_slice.h5, scale: 1.0}}
+
+metrics:
+  mtf_thresholds: [0.9, 0.5]
+  gradient_mask: {quantity: vorticity, top_percent: 10}

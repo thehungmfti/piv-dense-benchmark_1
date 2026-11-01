@@ -1,0 +1,50 @@
+# v2 — tinh chỉnh từ v1: wake theo liên tục TRỤC ĐỐI XỨNG (hàm dòng Stokes, div₂D = −v/r ≠ 0) +
+# trường nén được + nhiều trường sin hơn, để bỏ prior "không nén được" mà v1 học từ dữ liệu div₂D = 0.
+# Huấn luyện RAFT-PIV (tái hiện) cho dòng wake sau mô hình trục đối xứng đáy tù.
+# Chạy:  python scripts/train_raftpiv.py configs/raftpiv_wake.yaml
+name: raftpiv_wake_v2
+out_dir: checkpoints/raftpiv_wake_v2
+
+model:                       # tham số mạng — chỉnh cho bài toán
+  down: 4                    # /4: giữ chi tiết hạt 1.5–4 px & lớp cắt mỏng (RAFT gốc /8)
+  enc_channels: [32, 48, 64]
+  feat_dim: 128
+  hidden_dim: 96
+  context_dim: 64
+  corr_levels: 4             # tầm tra cứu: ±r·down·2^(L−1) = ±4·4·8 = ±128 px ≫ U∞ (≤ 12 px)
+  corr_radius: 4
+  motion_dim: 96
+  iters: 8                   # vòng cập nhật khi huấn luyện (suy luận dùng 12–16)
+
+data:
+  pool:                      # kho tổng hợp sinh trước
+    dir: ../raftpiv_data/pool128_v2
+    n: 12000
+    size: 128
+    seed: 2027
+    mix: {wake: 0.45, compressible: 0.2, sine: 0.12, turbulence: 0.08, vortex: 0.07, uniform: 0.08}
+  cai:                       # Cai et al. 2019 (tải thủ công, xem scripts/download_data.md); bỏ trống nếu không có
+    root: ../data_cai
+    classes: [cylinder, backstep]
+    prob: 0.2                # xác suất lấy 1 mẫu Cai trong batch
+  crop: 128
+
+train:
+  init_from: checkpoints/raftpiv_wake/best.pt   # v1 (6000 bước)
+  steps: 3500
+  batch: 6
+  lr: 2.0e-4
+  weight_decay: 1.0e-5
+  gamma: 0.8
+  clip: 1.0
+  val_every: 500
+  ckpt_every: 250
+  threads: 4
+  time_limit_h: 2.5
+  device: cpu                # "cuda" nếu có GPU
+
+validation:
+  wake_n: 24                 # mẫu wake 256×256 sinh riêng (seed khác kho huấn luyện)
+  wake_seed: 777
+  sine: true                 # 4 cặp sin dưới pixel (nén & cắt, λ = 24, 48 px)
+  cai_n_per_class: 24        # từ FlowData_test.list

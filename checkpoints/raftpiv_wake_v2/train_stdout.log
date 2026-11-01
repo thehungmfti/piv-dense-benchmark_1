@@ -1,0 +1,163 @@
+Sinh kho dữ liệu tổng hợp → /home/user/raftpiv_data/pool128_v2
+  pool 1000/12000
+  pool 2000/12000
+  pool 3000/12000
+  pool 4000/12000
+  pool 5000/12000
+  pool 6000/12000
+  pool 7000/12000
+  pool 8000/12000
+  pool 9000/12000
+  pool 10000/12000
+  pool 11000/12000
+  pool 12000/12000
+Cai et al.: 5070 mẫu train, 180 mẫu test
+Khởi tạo trọng số từ /home/user/piv-dense-benchmark/checkpoints/raftpiv_wake/best.pt (bước 6000)
+RAFT-PIV: 1.80 M tham số, cấu hình {'down': 4, 'enc_channels': [32, 48, 64], 'feat_dim': 128, 'hidden_dim': 96, 'context_dim': 64, 'corr_levels': 4, 'corr_radius': 4, 'motion_dim': 96, 'iters': 8, 'dropout': 0.0, 'extra': {}}
+step     25 loss 1.4051 epe 0.5166 lr 3.48e-05 0.6 min
+step     50 loss 1.6169 epe 0.6292 lr 6.16e-05 1.1 min
+step     75 loss 1.6162 epe 0.5980 lr 8.84e-05 1.6 min
+step    100 loss 1.3536 epe 0.5047 lr 1.15e-04 2.2 min
+step    125 loss 1.6390 epe 0.6081 lr 1.42e-04 2.7 min
+step    150 loss 1.7061 epe 0.6453 lr 1.69e-04 3.2 min
+step    175 loss 1.5514 epe 0.5894 lr 1.96e-04 3.8 min
+step    200 loss 2.1158 epe 0.7947 lr 1.99e-04 4.3 min
+step    225 loss 1.2332 epe 0.4710 lr 1.97e-04 4.9 min
+step    250 loss 1.3452 epe 0.4912 lr 1.96e-04 5.4 min
+step    275 loss 1.3022 epe 0.4843 lr 1.94e-04 5.9 min
+step    300 loss 1.8581 epe 0.7215 lr 1.93e-04 6.4 min
+step    325 loss 1.9495 epe 0.7533 lr 1.91e-04 7.0 min
+step    350 loss 1.6642 epe 0.6308 lr 1.90e-04 7.5 min
+step    375 loss 1.6984 epe 0.6384 lr 1.89e-04 8.0 min
+step    400 loss 1.7010 epe 0.6156 lr 1.87e-04 8.6 min
+step    425 loss 1.4856 epe 0.5591 lr 1.86e-04 9.1 min
+step    450 loss 2.1078 epe 0.8029 lr 1.84e-04 9.6 min
+step    475 loss 1.6184 epe 0.6334 lr 1.83e-04 10.1 min
+step    500 loss 1.4394 epe 0.5493 lr 1.81e-04 10.7 min
+  [val] step 500: {'wake': 0.25703917640905277, 'sine': 0.24422470583812014, 'cai_cylinder': 0.09072168599414422, 'cai_backstep': 0.07479410610226687} (mean 0.1667)
+step    525 loss 1.8507 epe 0.7114 lr 1.80e-04 11.8 min
+step    550 loss 1.6811 epe 0.6516 lr 1.78e-04 12.3 min
+step    575 loss 1.5038 epe 0.5574 lr 1.77e-04 12.9 min
+step    600 loss 1.5541 epe 0.5963 lr 1.75e-04 13.4 min
+step    625 loss 1.3988 epe 0.5359 lr 1.74e-04 13.9 min
+step    650 loss 1.3426 epe 0.5042 lr 1.72e-04 14.4 min
+step    675 loss 1.6384 epe 0.6035 lr 1.71e-04 14.9 min
+step    700 loss 1.6809 epe 0.6106 lr 1.70e-04 15.5 min
+step    725 loss 1.2022 epe 0.4399 lr 1.68e-04 16.0 min
+step    750 loss 1.4543 epe 0.5586 lr 1.67e-04 16.5 min
+step    775 loss 1.2959 epe 0.4837 lr 1.65e-04 17.0 min
+step    800 loss 1.3968 epe 0.5245 lr 1.64e-04 17.5 min
+step    825 loss 1.5789 epe 0.5869 lr 1.62e-04 18.1 min
+step    850 loss 1.6010 epe 0.6240 lr 1.61e-04 18.6 min
+step    875 loss 1.2343 epe 0.4566 lr 1.59e-04 19.1 min
+step    900 loss 1.5020 epe 0.5580 lr 1.58e-04 19.6 min
+step    925 loss 1.5353 epe 0.5826 lr 1.56e-04 20.1 min
+step    950 loss 1.4159 epe 0.5234 lr 1.55e-04 20.6 min
+step    975 loss 1.4948 epe 0.5583 lr 1.53e-04 21.1 min
+step   1000 loss 1.4966 epe 0.5627 lr 1.52e-04 21.6 min
+  [val] step 1000: {'wake': 0.2243674155372024, 'sine': 0.25344842569445947, 'cai_cylinder': 0.08159426705094379, 'cai_backstep': 0.06643038272609984} (mean 0.1565)
+step   1025 loss 1.2198 epe 0.4504 lr 1.51e-04 23.3 min
+step   1050 loss 1.5050 epe 0.5708 lr 1.49e-04 25.7 min
+step   1075 loss 1.5162 epe 0.5666 lr 1.48e-04 26.3 min
+step   1100 loss 1.2685 epe 0.4699 lr 1.46e-04 26.8 min
+step   1125 loss 1.7369 epe 0.6557 lr 1.45e-04 27.3 min
+step   1150 loss 1.3153 epe 0.4833 lr 1.43e-04 27.8 min
+step   1175 loss 1.7119 epe 0.6427 lr 1.42e-04 28.3 min
+step   1200 loss 1.8897 epe 0.7213 lr 1.40e-04 28.9 min
+step   1225 loss 1.4564 epe 0.5513 lr 1.39e-04 29.4 min
+step   1250 loss 1.2327 epe 0.4544 lr 1.37e-04 29.9 min
+step   1275 loss 1.5842 epe 0.6010 lr 1.36e-04 30.4 min
+step   1300 loss 1.5511 epe 0.6044 lr 1.34e-04 30.9 min
+step   1325 loss 1.2782 epe 0.4829 lr 1.33e-04 31.5 min
+step   1350 loss 1.4959 epe 0.5718 lr 1.32e-04 32.0 min
+step   1375 loss 1.2927 epe 0.4914 lr 1.30e-04 32.5 min
+step   1400 loss 1.1665 epe 0.4349 lr 1.29e-04 33.1 min
+step   1425 loss 1.3940 epe 0.5184 lr 1.27e-04 33.6 min
+step   1450 loss 1.3997 epe 0.5303 lr 1.26e-04 34.2 min
+step   1475 loss 1.2927 epe 0.4821 lr 1.24e-04 34.7 min
+step   1500 loss 1.4703 epe 0.5603 lr 1.23e-04 35.2 min
+  [val] step 1500: {'wake': 0.22625162163934598, 'sine': 0.24259302297814367, 'cai_cylinder': 0.08327719087223723, 'cai_backstep': 0.0743575857409202} (mean 0.1566)
+step   1525 loss 1.4083 epe 0.5299 lr 1.21e-04 36.4 min
+step   1550 loss 1.4223 epe 0.5256 lr 1.20e-04 36.9 min
+step   1575 loss 1.5458 epe 0.6098 lr 1.18e-04 37.4 min
+step   1600 loss 1.2887 epe 0.4904 lr 1.17e-04 37.9 min
+step   1625 loss 1.2659 epe 0.4786 lr 1.15e-04 38.5 min
+step   1650 loss 2.0938 epe 0.8179 lr 1.14e-04 39.0 min
+step   1675 loss 1.4801 epe 0.5374 lr 1.13e-04 39.5 min
+step   1700 loss 1.3520 epe 0.5079 lr 1.11e-04 40.1 min
+step   1725 loss 1.3959 epe 0.5286 lr 1.10e-04 40.6 min
+step   1750 loss 1.2359 epe 0.4573 lr 1.08e-04 41.2 min
+step   1775 loss 1.6044 epe 0.6052 lr 1.07e-04 41.7 min
+step   1800 loss 1.6067 epe 0.6171 lr 1.05e-04 42.2 min
+step   1825 loss 1.5097 epe 0.5887 lr 1.04e-04 42.8 min
+step   1850 loss 1.7014 epe 0.6566 lr 1.02e-04 43.3 min
+step   1875 loss 1.3445 epe 0.5078 lr 1.01e-04 43.9 min
+step   1900 loss 1.3428 epe 0.5092 lr 9.94e-05 44.4 min
+step   1925 loss 1.5420 epe 0.5873 lr 9.79e-05 44.9 min
+step   1950 loss 1.4337 epe 0.5462 lr 9.64e-05 45.4 min
+step   1975 loss 1.6218 epe 0.6162 lr 9.50e-05 46.0 min
+step   2000 loss 1.1391 epe 0.4228 lr 9.35e-05 46.5 min
+  [val] step 2000: {'wake': 0.22254602291470815, 'sine': 0.2428058080255859, 'cai_cylinder': 0.07960692785966218, 'cai_backstep': 0.06411715979942308} (mean 0.1523)
+step   2025 loss 1.5660 epe 0.6068 lr 9.20e-05 47.6 min
+step   2050 loss 1.4855 epe 0.5530 lr 9.06e-05 48.1 min
+step   2075 loss 1.4650 epe 0.5600 lr 8.91e-05 48.7 min
+step   2100 loss 1.3634 epe 0.5144 lr 8.77e-05 49.2 min
+step   2125 loss 1.4017 epe 0.5290 lr 8.62e-05 49.7 min
+step   2150 loss 1.3540 epe 0.5015 lr 8.47e-05 50.2 min
+step   2175 loss 1.5266 epe 0.5848 lr 8.33e-05 50.8 min
+step   2200 loss 1.8205 epe 0.6899 lr 8.18e-05 51.3 min
+step   2225 loss 1.6323 epe 0.6050 lr 8.04e-05 51.8 min
+step   2250 loss 1.2684 epe 0.4700 lr 7.89e-05 52.3 min
+step   2275 loss 1.5787 epe 0.5991 lr 7.74e-05 52.8 min
+step   2300 loss 1.1993 epe 0.4484 lr 7.60e-05 53.4 min
+step   2325 loss 1.3010 epe 0.4893 lr 7.45e-05 53.9 min
+step   2350 loss 1.6683 epe 0.6378 lr 7.30e-05 54.4 min
+step   2375 loss 1.7358 epe 0.6749 lr 7.16e-05 54.9 min
+step   2400 loss 1.3374 epe 0.5000 lr 7.01e-05 55.4 min
+step   2425 loss 1.6147 epe 0.6365 lr 6.87e-05 55.9 min
+step   2450 loss 1.4787 epe 0.5656 lr 6.72e-05 56.4 min
+step   2475 loss 1.4019 epe 0.5383 lr 6.57e-05 56.9 min
+step   2500 loss 1.6520 epe 0.6294 lr 6.43e-05 57.5 min
+  [val] step 2500: {'wake': 0.212824559672806, 'sine': 0.25450977708197925, 'cai_cylinder': 0.07723830806776452, 'cai_backstep': 0.06700361470845329} (mean 0.1529)
+step   2525 loss 1.7412 epe 0.6591 lr 6.28e-05 58.6 min
+step   2550 loss 1.6078 epe 0.6145 lr 6.13e-05 59.2 min
+step   2575 loss 1.2787 epe 0.4677 lr 5.99e-05 59.7 min
+step   2600 loss 1.2275 epe 0.4665 lr 5.84e-05 60.2 min
+step   2625 loss 1.6681 epe 0.6404 lr 5.70e-05 60.8 min
+step   2650 loss 1.4483 epe 0.5517 lr 5.55e-05 61.3 min
+step   2675 loss 1.4849 epe 0.5777 lr 5.40e-05 61.8 min
+step   2700 loss 1.4151 epe 0.5525 lr 5.26e-05 62.3 min
+step   2725 loss 1.3190 epe 0.4971 lr 5.11e-05 62.9 min
+step   2750 loss 1.2055 epe 0.4531 lr 4.96e-05 63.4 min
+step   2775 loss 1.4625 epe 0.5552 lr 4.82e-05 63.9 min
+step   2800 loss 1.4471 epe 0.5665 lr 4.67e-05 64.5 min
+step   2825 loss 1.2582 epe 0.4744 lr 4.53e-05 65.0 min
+step   2850 loss 1.3381 epe 0.4894 lr 4.38e-05 65.5 min
+step   2875 loss 1.1091 epe 0.4129 lr 4.23e-05 66.0 min
+step   2900 loss 1.7086 epe 0.6544 lr 4.09e-05 66.5 min
+step   2925 loss 1.3759 epe 0.5227 lr 3.94e-05 67.1 min
+step   2950 loss 1.3839 epe 0.5323 lr 3.80e-05 67.6 min
+step   2975 loss 1.4042 epe 0.5430 lr 3.65e-05 68.1 min
+step   3000 loss 1.2947 epe 0.4958 lr 3.50e-05 68.6 min
+  [val] step 3000: {'wake': 0.21293442813000732, 'sine': 0.23718743978783305, 'cai_cylinder': 0.07388934299224523, 'cai_backstep': 0.06109131622041355} (mean 0.1463)
+step   3025 loss 1.4203 epe 0.5371 lr 3.36e-05 69.7 min
+step   3050 loss 1.2431 epe 0.4673 lr 3.21e-05 70.3 min
+step   3075 loss 1.5513 epe 0.5904 lr 3.06e-05 70.8 min
+step   3100 loss 0.9866 epe 0.3626 lr 2.92e-05 71.3 min
+step   3125 loss 1.2330 epe 0.4696 lr 2.77e-05 71.8 min
+step   3150 loss 1.4199 epe 0.5230 lr 2.63e-05 72.4 min
+step   3175 loss 1.1705 epe 0.4293 lr 2.48e-05 72.9 min
+step   3200 loss 1.2046 epe 0.4541 lr 2.33e-05 73.4 min
+step   3225 loss 1.5168 epe 0.5859 lr 2.19e-05 73.9 min
+step   3250 loss 1.2476 epe 0.4830 lr 2.04e-05 74.5 min
+step   3275 loss 1.6517 epe 0.6267 lr 1.89e-05 75.0 min
+step   3300 loss 1.1894 epe 0.4588 lr 1.75e-05 75.5 min
+step   3325 loss 1.2997 epe 0.4968 lr 1.60e-05 76.1 min
+step   3350 loss 1.1775 epe 0.4390 lr 1.46e-05 76.6 min
+step   3375 loss 1.3029 epe 0.4845 lr 1.31e-05 77.1 min
+step   3400 loss 1.6252 epe 0.6241 lr 1.16e-05 77.6 min
+step   3425 loss 1.4715 epe 0.5711 lr 1.02e-05 78.2 min
+step   3450 loss 1.5676 epe 0.6081 lr 8.71e-06 78.7 min
+step   3475 loss 1.4922 epe 0.5771 lr 7.25e-06 79.2 min
+step   3500 loss 1.7066 epe 0.6508 lr 5.79e-06 79.7 min
+  [val] step 3500: {'wake': 0.2133088063166949, 'sine': 0.24160671481216578, 'cai_cylinder': 0.07249887419316947, 'cai_backstep': 0.06052842239431742} (mean 0.1470)
